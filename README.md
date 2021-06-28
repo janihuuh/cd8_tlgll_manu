@@ -4,20 +4,20 @@ Scripts to reproduce figures and analyses in the manuscript "Single-cell transcr
 
 ## To reproduce the results:
 
-### First, clone this repository
+### 1) Clone this repository
 
 ```
 git clone https://github.com/janihuuh/cd8_tlgll_manu
 cd path/to/cd8_tlgll_manu/
 ```
 
-#### Obtain the data
+### 2) Obtain the data
 
 * The processed scRNA+TCRab-seq data can be received from EGA (accession number EGAS00001005297, submission ongoing). 
 * The processed bulk-RNA-seq data can be received from ArrayExpress (submission ongoing). 
 * The TCRb-seq data can be received from immuneAccess (submission ongoing).
 
-### To create seurat-objects, you need to run
+### 3) Create seurat-objects
 
 ```
 Rscript R/main.R ## init the helper-functions, coloring, etc.
@@ -27,15 +27,16 @@ Rscript R/rnaseq/run_createSeurat.R ## read the CellRanger output, filter, merge
 
 ```
 
-### To analyze other scRNAseq aspects, you need to run
+### 4) Run additional RNAseq analyses
 
 ```
 Rscript R/rnaseq/run_cellphone.R ## init data for CellPhoneDb
 bash bash/run_cellphonedb.sh ## Run CellPhoneDb
 Rscript R/rnaseq/run_scenic.R ## run Scenic-analysis
+Rscript R/rnaseq/run_edgeR.R ## run bulk-RNAseq analysis
 ```
 
-### To analyze TCR-seq data, you need to run
+### 5) Run additional TCRseq analyses 
 
 ```
 bash bash/run_vdjtools.sh ## preprocess the bulk-TCRb-data, subsample, calcualte diverisities, etc.
