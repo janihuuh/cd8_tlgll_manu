@@ -2,6 +2,73 @@
 
 Scripts to reproduce figures and analyses in the manuscript "Single-cell transcriptomics identifies synergistic role of leukemic and non-leukemic immune repertoires in CD8+ T-cell large granular lymphocytic leukemia" Huuhtanen, Bhattacharya et al., submitted 
 
+
+
+
+# Pseudocode for CD8+ T-LGLL manuscript
+
+## scTCRab-seq preprocessing
+for scTCRseq data, **_do_**  
+**read** 10X CellRanger output ## 11 T-LGLL and 6 healthy  
+**filter** ## based on the quality of cells (incomple TCRab information, loq confidence data)  
+**annotate** leukemic clones ## using manual annotation mark all clones as leukemic and non clones as possible non leukemic clones  
+
+## scRNAseq preprocessing
+for t\_lgll\_data, **_do_**  
+  **read** 10X CellRanger output ## 11 T-LGLL samples  
+  **filter** based on the quality of cells ## different for each individual to avoid loss of leukemic cells  
+
+for healthy\_data, **_do_**  
+  **read** 10X CellRanger output 
+   **filter** based on the quality of cells ## common for all healthy donors  
+
+total_data = **merge** t\_lgll\_data\_filtered *with* healthy\_data\_filtered
+
+for total\_data, **_do_**
+  **annotate** cells with singleR  
+  **merge** with TCRdata  
+  **calculate** latent represenation ## with scvi  
+  **calculate** UMAP representation from latents  
+  **calculate** clustering from latents  
+  **decide** optimal clustering ## based on visual inspection  
+  **scale** data  
+
+for total\_data, **_do_**  
+ 	**calculate** DE-genes, pathways between clusters  
+ 	**calculate** DE-genes, pathways between T-LGLL and healthy  
+	**calculate** ligand-receptor pairs with cellphonedb  
+	**calculate** regulons with scenic  
+	**detect** STAT3 SNPs with vartrix  
+		
+	
+## Determine antigen-drive
+t\_lgll\_tcr\_data = **list** scTCRab-seq, bulk-TCRb-seq samples
+
+for t\_lgll\_tcr\_data, **_do_**  
+	subsample to 30k reads  
+	run GLIPH2  
+	identify t_lgll_clone  
+	***if*** t\_lgll\_clone in GLIPH2\_results;  
+		antigen\_drive  
+	***else***  
+		no\_antgen\_drive  
+
+other\_\tcr\_data = **list** bulk-TCRb-seq from skcm, ra, healthy samples
+
+for other\_tcr\_data, **_do_**
+	**subsample** to 30k reads
+	**run** GLIPH2
+	**identify** largest\_clone
+	***if*** largest\_clone in GLIPH2\_results;
+		antigen\_drive
+	***else***
+		no\_antgen\_drive
+			 
+	
+
+
+
+
 ## To reproduce the results:
 
 ### 1) Clone this repository
