@@ -116,6 +116,7 @@ Rscript R/rnaseq/run_createSeurat.R ## read the CellRanger output, filter, merge
 Rscript R/rnaseq/run_cellphone.R ## init data for CellPhoneDb
 bash bash/run_cellphonedb.sh ## Run CellPhoneDb
 Rscript R/rnaseq/run_scenic.R ## run Scenic-analysis
+bash bash/run_vartrix.sh ## Run Vartrix
 Rscript R/rnaseq/run_edgeR.R ## run bulk-RNAseq analysis
 ```
 
