@@ -10,9 +10,9 @@ Scripts to reproduce figures and analyses in the manuscript "Single-cell transcr
 
 <pre>
 <b>for</b> scTCRseq data, <i><b>do</b></i>  
-	<b>read</b> 10X CellRanger output ## 11 T-LGLL and 6 healthy  
-	<b>filter</b> ## based on the quality of cells (incomple TCRab information, loq confidence data)  
-	<b>annotate</b> leukemic clones ## using manual annotation mark all clones as leukemic and non clones as possible non leukemic clones  
+  <b>read</b> 10X CellRanger output ## 11 T-LGLL and 6 healthy  
+  <b>filter</b> ## based on the quality of cells (incomple TCRab information, loq confidence data)  
+  <b>annotate</b> leukemic clones ## using manual annotation mark all clones as leukemic and non clones as possible non leukemic clones  
 </pre>
 
 
@@ -20,12 +20,12 @@ Scripts to reproduce figures and analyses in the manuscript "Single-cell transcr
 
 <pre>
 <b>for</b> t_lgll_data, <i><b>do</b></i>  
-<b>read</b> 10X CellRanger output ## 11 T-LGLL samples  
+  <b>read</b> 10X CellRanger output ## 11 T-LGLL samples  
   <b>filter</b> based on the quality of cells ## different for each individual to avoid loss of leukemic cells  
 
 <b>for</b> healthy_data, <i><b>do</b></i>  
-	<b>read</b> 10X CellRanger output 
-	<b>filter</b> based on the quality of cells ## common for all healthy donors  
+  <b>read</b> 10X CellRanger output 
+  <b>filter</b> based on the quality of cells ## common for all healthy donors  
 
 total_data = <b>merge</b> t_lgll_data_filtered with healthy_data_filtered
 </pre>
@@ -43,11 +43,11 @@ total_data = <b>merge</b> t_lgll_data_filtered with healthy_data_filtered
 
 <pre>
 <b>for</b> total_data, <i><b>do</b></i>  
- 	<b>calculate</b> DE-genes, pathways between clusters  
- 	<b>calculate</b> DE-genes, pathways between T-LGLL and healthy  
-	<b>calculate</b> ligand-receptor pairs with cellphonedb  
-	<b>calculate</b> regulons with scenic  
-	<b>detect</b> STAT3 SNPs with vartrix  
+  <b>calculate</b> DE-genes, pathways between clusters  
+  <b>calculate</b> DE-genes, pathways between T-LGLL and healthy  
+  <b>calculate</b> ligand-receptor pairs with cellphonedb  
+  <b>calculate</b> regulons with scenic  
+  <b>detect</b> STAT3 SNPs with vartrix  
 </pre>
 	
 	
@@ -57,26 +57,26 @@ total_data = <b>merge</b> t_lgll_data_filtered with healthy_data_filtered
 t_lgll_tcr_data = list scTCRab-seq, bulk-TCRb-seq samples
 
 <b>for</b> t_lgll_tcr_data, <i><b>do</b></i>  
-	<b>subsample</b> to 30k reads  
-	<b>run</b> GLIPH2  
-	<b>identify</b> t_lgll_clone  
-	<i><b>if</b></i>   t_lgll_clone <i><b>in</b></i>   GLIPH2_results;  
-		antigen_drive  
-	<i><b>else</b></i>    
-		no_antgen_drive  
+  <b>subsample</b> to 30k reads  
+  <b>run</b> GLIPH2  
+  <b>identify</b> t_lgll_clone  
+  <i><b>if</b></i>   t_lgll_clone <i><b>in</b></i>   GLIPH2_results;  
+    antigen_drive  
+  <i><b>else</b></i>    
+    no_antgen_drive  
 </pre>
 
 <pre>
 other_tcr_data = list bulk-TCRb-seq from skcm, ra, healthy samples
 
 <b>for</b> other_tcr_data, <i><b>do</b></i>
-	<b>subsample</b> to 30k reads
-	<b>run</b> GLIPH2
-	<b>identify</b> largest_clone
-	<i><b>if</b></i>   largest <i><b>in</b></i>   GLIPH2_results;  
-		antigen_drive
-	<i><b>else</b></i>    
-		no_antgen_drive
+  <b>subsample</b> to 30k reads
+  <b>run</b> GLIPH2
+  <b>identify</b> largest_clone
+  <i><b>if</b></i>   largest <i><b>in</b></i>   GLIPH2_results;  
+    antigen_drive
+  <i><b>else</b></i>    
+    no_antgen_drive
 </pre>
 
 			 
