@@ -4,65 +4,81 @@ Scripts to reproduce figures and analyses in the manuscript "Single-cell transcr
 
 
 
-
 # Pseudocode for CD8+ T-LGLL manuscript
 
 ## scTCRab-seq preprocessing
-for scTCRseq data, **_do_**  
-**read** 10X CellRanger output ## 11 T-LGLL and 6 healthy  
-**filter** ## based on the quality of cells (incomple TCRab information, loq confidence data)  
-**annotate** leukemic clones ## using manual annotation mark all clones as leukemic and non clones as possible non leukemic clones  
+
+<pre>
+<b>for</b> scTCRseq data, <i><b>do</b></i>  
+	<b>read</b> 10X CellRanger output ## 11 T-LGLL and 6 healthy  
+	<b>filter</b> ## based on the quality of cells (incomple TCRab information, loq confidence data)  
+	<b>annotate</b> leukemic clones ## using manual annotation mark all clones as leukemic and non clones as possible non leukemic clones  
+</pre>
+
 
 ## scRNAseq preprocessing
-for t\_lgll\_data, **_do_**  
-  **read** 10X CellRanger output ## 11 T-LGLL samples  
-  **filter** based on the quality of cells ## different for each individual to avoid loss of leukemic cells  
 
-for healthy\_data, **_do_**  
-  **read** 10X CellRanger output 
-   **filter** based on the quality of cells ## common for all healthy donors  
+<pre>
+<b>for</b> t_lgll_data, <i><b>do</b></i>  
+<b>read</b> 10X CellRanger output ## 11 T-LGLL samples  
+  <b>filter</b> based on the quality of cells ## different for each individual to avoid loss of leukemic cells  
 
-total_data = **merge** t\_lgll\_data\_filtered *with* healthy\_data\_filtered
+<b>for</b> healthy_data, <i><b>do</b></i>  
+	<b>read</b> 10X CellRanger output 
+	<b>filter</b> based on the quality of cells ## common for all healthy donors  
 
-for total\_data, **_do_**
-  **annotate** cells with singleR  
-  **merge** with TCRdata  
-  **calculate** latent represenation ## with scvi  
-  **calculate** UMAP representation from latents  
-  **calculate** clustering from latents  
-  **decide** optimal clustering ## based on visual inspection  
-  **scale** data  
+total_data = <b>merge</b> t_lgll_data_filtered with healthy_data_filtered
+</pre>
 
-for total\_data, **_do_**  
- 	**calculate** DE-genes, pathways between clusters  
- 	**calculate** DE-genes, pathways between T-LGLL and healthy  
-	**calculate** ligand-receptor pairs with cellphonedb  
-	**calculate** regulons with scenic  
-	**detect** STAT3 SNPs with vartrix  
-		
+<pre>
+<b>for</b> total_data, <i><b>do</b></i> 
+  <b>annotate</b> cells with singleR  
+  <b>merge</b> with TCRdata  
+  <b>calculate</b> latent represenation ## with scvi  
+  <b>calculate</b> UMAP representation from latents  
+  <b>calculate</b> clustering from latents  
+  <b>decide</b> optimal clustering ## based on visual inspection  
+  <b>scale</b> data  
+</pre>
+
+<pre>
+<b>for</b> total_data, <i><b>do</b></i>  
+ 	<b>calculate</b> DE-genes, pathways between clusters  
+ 	<b>calculate</b> DE-genes, pathways between T-LGLL and healthy  
+	<b>calculate</b> ligand-receptor pairs with cellphonedb  
+	<b>calculate</b> regulons with scenic  
+	<b>detect</b> STAT3 SNPs with vartrix  
+</pre>
+	
 	
 ## Determine antigen-drive
-t\_lgll\_tcr\_data = **list** scTCRab-seq, bulk-TCRb-seq samples
 
-for t\_lgll\_tcr\_data, **_do_**  
-	subsample to 30k reads  
-	run GLIPH2  
-	identify t_lgll_clone  
-	***if*** t\_lgll\_clone in GLIPH2\_results;  
-		antigen\_drive  
-	***else***  
-		no\_antgen\_drive  
+<pre>
+t_lgll_tcr_data = list scTCRab-seq, bulk-TCRb-seq samples
 
-other\_\tcr\_data = **list** bulk-TCRb-seq from skcm, ra, healthy samples
+<b>for</b> t_lgll_tcr_data, <i><b>do</b></i>  
+	<b>subsample</b> to 30k reads  
+	<b>run</b> GLIPH2  
+	<b>identify</b> t_lgll_clone  
+	<i><b>if</b></i>   t_lgll_clone <i><b>in</b></i>   GLIPH2_results;  
+		antigen_drive  
+	<i><b>else</b></i>    
+		no_antgen_drive  
+</pre>
 
-for other\_tcr\_data, **_do_**
-	**subsample** to 30k reads
-	**run** GLIPH2
-	**identify** largest\_clone
-	***if*** largest\_clone in GLIPH2\_results;
-		antigen\_drive
-	***else***
-		no\_antgen\_drive
+<pre>
+other_tcr_data = list bulk-TCRb-seq from skcm, ra, healthy samples
+
+<b>for</b> other_tcr_data, <i><b>do</b></i>
+	<b>subsample</b> to 30k reads
+	<b>run</b> GLIPH2
+	<b>identify</b> largest_clone
+	<i><b>if</b></i>   largest <i><b>in</b></i>   GLIPH2_results;  
+		antigen_drive
+	<i><b>else</b></i>    
+		no_antgen_drive
+</pre>
+
 			 
 	
 
