@@ -2,7 +2,13 @@
 
 Scripts to reproduce figures and analyses in the manuscript "Single-cell transcriptomics identifies synergistic role of leukemic and non-leukemic immune repertoires in CD8+ T-cell large granular lymphocytic leukemia" Huuhtanen, Bhattacharya et al., submitted 
 
+# Installation
 
+Clone this github repository, e.g., in terminal by
+
+$ git clonehttps://github.com/janihuuh/cd8_tlgll_manu
+
+All the other dependencies (R-packages, Python modules) are mentioned in the code and their installation guides can be found in their own respective guides. The typical installation time for all the software on a standard laptop (e.g., Apple M1 16Gb) should not be greater than 1 hour. 
 
 # Pseudocode for CD8+ T-LGLL manuscript
 
